@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Confirmed
+{% endblock %}
+
+{% block main %}
+    <h1 style="margin-bottom: 50px">Order confirmed!</h1>
+    <div>
+            {% for order in orders %}
+                <p>Your order it's on its way.</p>
+                <p>We'll serve you at your table.</p>
+                <p style="font-size: 1.5rem; margin-top: 80px;">To pay: {{ order["order_amount"] }}</p>
+                <p style="font-weight: bold; font-size: 1.5rem">Code: {{ order["order_code"] }}</p>
+            {% endfor %}
+    </div>
+
+{% endblock %}

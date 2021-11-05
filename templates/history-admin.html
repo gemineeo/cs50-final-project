@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Orders
+{% endblock %}
+
+{% block main %}
+    <h1 style="margin-bottom: 50px">Orders</h1>
+    <div>
+        <table class="table table-striped table-hover" style="width:100%">
+            <th>Timestamp</th>
+            <th>Client</th>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Amount</th>
+            <th>Code</th>
+            <th>Table</th>
+            <th>Status</th>
+            <th></th>
+            {% for order in orders %}
+                <tr>
+                    <td>{{ order["order_timestamp"] }}</td>
+                    <td>{{ order["order_first_name"] }}</td>
+                    <td style="padding: 0">
+                        <table class="table table-borderless" style="width: 100%; height: 100%; margin: 0;">
+                           {% for order_item in order["order_items"] %}
+                                <tr style="padding: 0; height: 100%;">
+                                    <td>
+                                        <div style="min-height:38px">
+                                            {{ order["order_items"][order["order_items"].index(order_item)]["name"] }}
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                    <td style="padding: 0">
+                        <table  class="table table-borderless" style="width: 100%; margin: 0;">
+                           {% for order_item in order["order_items"] %}
+                                <tr>
+                                    <td>
+                                        <div style="min-height:38px">
+                                            {{ order["order_items"][order["order_items"].index(order_item)]["quantity"] }}
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                    <td>{{ order["order_amount"] }}</td>
+                    <td>{{ order["order_code"] }}</td>
+                    <td>{{ order["order_tablenumber"] }}</td>
+                    <td>{{ order["order_status"] }}</td>
+                    <td>
+                        {% if order["order_status"] == 'In Progress' %}
+                        <form action="/done" method=post>
+                            <button class="btn btn-primary" value="{{ order["order_id"] }}" name="done" type="submit">Done</button>
+                        </form>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Edit Menu
+{% endblock %}
+
+{% block main %}
+    <h1 style="margin-bottom: 50px">Edit Menu</h1>
+    <div>
+        <table class="table table-striped" style="width:100%">
+            <th>Name</th>
+            <th>Price</th>
+            <th></th>
+            {% for row in rows %}
+            {% if row["active"] == 'yes' %}
+                <tr>
+                    <td>{{ row["name"] }}</td>
+                    <td>{{ row["price"] }}</td>
+                    <td>
+                        <form action="/delete" method=post>
+                            <button class="btn btn btn-danger" value="{{ row["item_id"] }}" name="delete" type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+    <a class="btn btn-primary" href="/new-item" role="button">Add new item</a>
+{% endblock %}

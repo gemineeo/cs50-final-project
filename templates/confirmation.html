@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Confirmation
+{% endblock %}
+
+{% block main %}
+    <h1 style="margin-bottom: 50px">Confirm your order</h1>
+    <div>
+        <table class="table table-striped" style="width:100%">
+            <th>Item</th>
+            <th>Quantity</th>
+            {% for order in orders %}
+                <tr>
+                    <td style="padding: 0">
+                        <table class="table table-borderless" style="width: 100%; height: 100%; margin: 0;">
+                           {% for order_item in order["order_items"] %}
+                                <tr style="padding: 0; height: 100%;">
+                                    <td>{{ order["order_items"][order["order_items"].index(order_item)]["name"] }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                    <td style="padding: 0">
+                        <table  class="table table-borderless" style="width: 100%; margin: 0;">
+                           {% for order_item in order["order_items"] %}
+                                <tr>
+                                    <td>{{ order["order_items"][order["order_items"].index(order_item)]["quantity"] }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div style="font-weight: bold; font-size: 1.5rem; margin: 40px 0">
+        {% for order in orders %}
+            Total Amount: {{ order["order_amount"] }}
+        {% endfor %}
+    </div>
+    <div>
+        <form action="/confirmation" method=post>
+            <div style="font-size: 1.2rem; margin: 40px 0">
+                <label for="tablenumber">Your table number:</label><br>
+                <input type="number" name="tablenumber" step="1" required>
+            </div>
+            <button class="btn btn-primary" name="submit_button" value="Confirm" type="submit">Confirm</button>
+            <button class="btn btn-danger" name="submit_button" value="Cancel" type="submit" formnovalidate>Cancel</button>
+        </form>
+    </div>
+
+{% endblock %}

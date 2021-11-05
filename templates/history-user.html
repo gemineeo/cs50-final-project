@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    History User
+{% endblock %}
+
+{% block main %}
+    <h1 style="margin-bottom: 50px">History User</h1>
+
+    <div class="container-menu" id="fixed">
+        <div class="container">
+            <div class="card-deck">
+                {% for order in orders %}
+                    <div class="card my-3">
+                        <div class="card-header">
+                            {{ order["order_timestamp"] }}
+                        </div>
+            			<div class="card-body">
+            			    <table class="table table-striped" style="width:100%">
+                			    {% for order_item in order["order_items"] %}
+                                    <tr style="padding: 0; height: 100%;">
+                                        <td>{{ order["order_items"][order["order_items"].index(order_item)]["name"] }}</td>
+                                        <td>{{ order["order_items"][order["order_items"].index(order_item)]["quantity"] }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+            				<p class="card-text">Total Amount: {{ order["order_amount"] }}</p>
+                    		<p class="card-text">Code: {{ order["order_code"] }}</p>
+                            <p class="card-text">{{ order["order_status"] }}</p>
+            			</div>
+            		</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

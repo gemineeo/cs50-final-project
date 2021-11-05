@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Menu User
+{% endblock %}
+
+{% block main %}
+
+    <!-- https://codepen.io/migli/pen/OQVRMw?editors=1100 !-->
+    <div class="container-menu" id="fixed">
+        <form action="/menu-user" method="post">
+            <div class="container">
+                <div class="card-deck">
+                    {% for row in rows %}
+                    {% if row["active"] == 'yes' %}
+                    <div class="card my-3">
+            			<img src="static/img/menu/{{ row["name"] }}.png" class="card-img-top">
+            			<div class="card-body">
+            				<h4 class="card-title">{{ row["name"] }}</h4>
+            				<p class="card-text"></p>
+            				<div class="card-price">
+            				    <span>{{ row["price"] }}</span>
+            				    <select class="form-control" name="quantity-{{row["item_id"]}}" id="quantity">
+                                    <option value="">0</option>
+                                    {% for i in range(1, 10) %}
+                                        <option value="{{ i }}">{{ i }}</option>
+                                    {% endfor %}
+                                </select>
+            				</div>
+            			</div>
+            		</div>
+            		{% endif %}
+                    {% endfor %}
+            	</div>
+            </div>
+            <div class="container-oder-btn">
+                <button class="order-btn" type="submit">Place Order</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
